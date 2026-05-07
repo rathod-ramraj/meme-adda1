@@ -1,4 +1,18 @@
+# Meme Adda 098 — robots.txt
 User-agent: *
+Allow: /
+
+User-agent: Googlebot
+Allow: /
+Allow: /assets/
+Allow: /*.js$
+Allow: /*.css$
+Allow: /*.jpg$
+Allow: /*.png$
+Allow: /*.webp$
+Allow: /*.svg$
+
+User-agent: Googlebot-Image
 Allow: /
 
 Sitemap: https://memeadda098.vercel.app/sitemap.xml

@@ -65,8 +65,8 @@
       rel="stylesheet"
     />
 
-  <!-- Preload hero image for LCP (bundled by Vite) -->
-  <link rel="preload" as="image" href="/src/assets/memeaddaprofile.jpg" />
+    <!-- Preload hero image for LCP (served from /public) -->
+    <link rel="preload" as="image" href="/memeaddaprofile.jpg" fetchpriority="high" />
 
     <!-- JSON-LD Structured Data -->
     <script type="application/ld+json">
@@ -112,6 +112,33 @@
   </head>
   <body>
     <div id="root"></div>
+    <noscript>
+      <div style="max-width:720px;margin:48px auto;padding:24px;font-family:Poppins,system-ui,sans-serif;color:#0B0B0F;">
+        <h1>Meme Adda 098 – Viral Memes, Funny Reels &amp; Trending Content</h1>
+        <p>
+          Meme Adda 098 is an Indian meme page on Instagram featuring viral memes,
+          funny reels, trending humor, and brand promotions. Updated daily with
+          relatable Indian humor, Bollywood references, school and college jokes,
+          and the latest internet trends.
+        </p>
+        <p>
+          Follow on Instagram:
+          <a href="https://www.instagram.com/meme_adda_098/">@meme_adda_098</a> ·
+          YouTube: <a href="https://www.youtube.com/@Meme_adda_098">@Meme_adda_098</a> ·
+          X: <a href="https://x.com/memeadda098">@memeadda098</a>
+        </p>
+        <ul>
+          <li><a href="/trending-memes">Trending Memes</a></li>
+          <li><a href="/latest-memes">Latest Memes</a></li>
+          <li><a href="/instagram-memes">Instagram Memes</a></li>
+          <li><a href="/privacy">Privacy Policy</a></li>
+          <li><a href="/terms">Terms &amp; Conditions</a></li>
+        </ul>
+        <p>
+          Please enable JavaScript to view the full Meme Adda 098 experience.
+        </p>
+      </div>
+    </noscript>
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>
