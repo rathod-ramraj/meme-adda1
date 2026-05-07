@@ -41,7 +41,7 @@ const hoverLift =
 const hoverGlow =
   "transition-all duration-300 ease-in-out hover:shadow-glow-hover hover:-translate-y-1";
 
-const SITE_URL = "https://memeadda098.com";
+const SITE_URL = "https://memeadda098.vercel.app";
 
 const SOCIAL = {
   youtube: "https://www.youtube.com/@Meme_adda_098",
