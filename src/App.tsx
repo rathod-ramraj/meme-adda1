@@ -43,6 +43,27 @@ const hoverGlow =
 
 const SITE_URL = "https://memeadda098.vercel.app";
 
+const PARTNER_ADS = [
+  {
+    name: "ONEFLIX",
+    tagline: "Free movies & series in HD",
+    url: "https://oneflixx.vercel.app/",
+    icon: "/oneflix-icon.png",
+  },
+  {
+    name: "AnimeXplore",
+    tagline: "Watch anime online free",
+    url: "https://animexploree.vercel.app/",
+    icon: "/anime-icon.png",
+  },
+  {
+    name: "PlayUp Live",
+    tagline: "Live cricket & sports streaming",
+    url: "https://playup.vercel.app/",
+    icon: "/cricket-icon.png",
+  },
+] as const;
+
 const SOCIAL = {
   youtube: "https://www.youtube.com/@Meme_adda_098",
   x: "https://x.com/memeadda098",
@@ -389,6 +410,61 @@ function FeatureCard({ children }: { children: React.ReactNode }) {
     >
       {children}
     </div>
+  );
+}
+
+function PartnerAdsSection() {
+  return (
+    <section className="scroll-mt-[72px] px-4 py-10 sm:px-8 lg:px-12" id="watch">
+      <motion.div
+        className="mx-auto max-w-[1200px]"
+        initial="hidden"
+        whileInView="visible"
+        viewport={viewportReveal}
+        variants={staggerContainer}
+      >
+        <motion.p
+          className="text-center text-xs font-semibold uppercase tracking-widest text-muted"
+          variants={fadeUpItem}
+        >
+          Sponsored
+        </motion.p>
+        <motion.h2
+          className="mt-2 text-center text-2xl font-bold text-black sm:text-3xl"
+          variants={fadeUpItem}
+        >
+          Watch &amp; stream
+        </motion.h2>
+        <motion.div
+          className="mt-8 grid grid-cols-1 gap-4 sm:grid-cols-3 sm:gap-6"
+          variants={staggerGrid}
+        >
+          {PARTNER_ADS.map((ad) => (
+            <motion.a
+              key={ad.url}
+              href={ad.url}
+              target="_blank"
+              rel="noopener noreferrer sponsored"
+              className={`flex items-center gap-4 rounded-2xl border border-border bg-white p-5 ${hoverLift}`}
+              variants={fadeUpItem}
+              whileHover={{ y: -4, transition: { duration: 0.28, ease: easeSmooth } }}
+            >
+              <img
+                src={ad.icon}
+                alt=""
+                width={52}
+                height={52}
+                className="h-[52px] w-[52px] shrink-0 rounded-xl object-cover"
+              />
+              <div className="min-w-0">
+                <p className="truncate font-semibold text-black">{ad.name}</p>
+                <p className="mt-0.5 text-sm text-muted">{ad.tagline}</p>
+              </div>
+            </motion.a>
+          ))}
+        </motion.div>
+      </motion.div>
+    </section>
   );
 }
 
@@ -1231,6 +1307,7 @@ function MemeAddaLanding() {
       />
       <main>
         <Hero />
+        <PartnerAdsSection />
         <AboutSection />
         <PromotionsSection />
         <FeaturedPlayer />
