@@ -64,6 +64,10 @@ export default function PrivacyContent() {
       </p>
 
       <p className="mt-8 text-sm">
+        <Link to="/" className="font-medium text-black underline underline-offset-4 hover:text-muted">
+          Meme Adda 098
+        </Link>
+        {" · "}
         See also our{" "}
         <Link to="/terms" className="font-medium text-black underline underline-offset-4 hover:text-muted">
           Terms and Conditions

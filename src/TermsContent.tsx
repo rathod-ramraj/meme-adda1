@@ -112,6 +112,12 @@ export default function TermsContent() {
         10. Governing Law
       </h2>
       <p>These terms shall be governed by and interpreted in accordance with the laws of India.</p>
+
+      <p className="mt-8 text-sm">
+        <Link to="/" className="font-medium text-black underline underline-offset-4 hover:text-muted">
+          Meme Adda 098
+        </Link>
+      </p>
     </article>
   );
 }

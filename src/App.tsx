@@ -1,12 +1,19 @@
 import { AnimatePresence, motion, useReducedMotion, type Variants } from "framer-motion";
-import { useEffect, useId, useLayoutEffect, useRef, useState } from "react";
-import { Link, Route, Routes, useLocation, useNavigate } from "react-router-dom";
-import InstagramMemesContent from "./InstagramMemesContent";
-import LatestMemesContent from "./LatestMemesContent";
-import PrivacyContent from "./PrivacyContent";
-import TermsContent from "./TermsContent";
-import TrendingMemesContent from "./TrendingMemesContent";
-import memeAddaProfile from "./assets/memeaddaprofile.jpg";
+import { lazy, Suspense, useEffect, useId, useLayoutEffect, useRef, useState } from "react";
+import { Link, Route, Routes, useLocation, useNavigate, useParams } from "react-router-dom";
+import SeoImage from "./components/SeoImage";
+import InstallAppPrompt from "./components/InstallAppPrompt";
+import SeoKeywordBlock from "./components/SeoKeywordBlock";
+import { getMemeBySlug, memePageTitle, MEMES } from "./data/memes";
+import MemePageContent from "./MemePageContent";
+import PageSeo from "./seo/PageSeo";
+import memeAddaLogo from "./assets/memeadda-logo.png";
+
+const TrendingMemesContent = lazy(() => import("./TrendingMemesContent"));
+const LatestMemesContent = lazy(() => import("./LatestMemesContent"));
+const InstagramMemesContent = lazy(() => import("./InstagramMemesContent"));
+const PrivacyContent = lazy(() => import("./PrivacyContent"));
+const TermsContent = lazy(() => import("./TermsContent"));
 
 const easeSmooth: [number, number, number, number] = [0.22, 1, 0.36, 1];
 
@@ -40,8 +47,6 @@ const hoverLift =
 
 const hoverGlow =
   "transition-all duration-300 ease-in-out hover:shadow-glow-hover hover:-translate-y-1";
-
-const SITE_URL = "https://memeadda098.vercel.app";
 
 const PARTNER_ADS = [
   {
@@ -83,36 +88,8 @@ function dmTextForPackage(label: string) {
 
 const DM_ALL_PACKAGES = `${DM_INTRO}Please help me book one of these:\n• Story — ₹99\n• Post — ₹129\n• Reel — ₹149\n• Collaboration — ₹179\n• Other / custom — (depends on scope)\n\nThanks!`;
 
-function PageSeo({
-  title,
-  description,
-  path,
-}: {
-  title: string;
-  description: string;
-  path: string;
-}) {
-  useEffect(() => {
-    document.title = title;
-    const setMeta = (sel: string, attr: string, val: string) => {
-      const el = document.querySelector(sel);
-      if (el) el.setAttribute(attr, val);
-    };
-    setMeta('meta[name="description"]', "content", description);
-    setMeta('meta[property="og:title"]', "content", title);
-    setMeta('meta[property="og:description"]', "content", description);
-    setMeta('meta[property="og:url"]', "content", `${SITE_URL}${path}`);
-    let canonical = document.querySelector(
-      'link[rel="canonical"]',
-    ) as HTMLLinkElement | null;
-    if (!canonical) {
-      canonical = document.createElement("link");
-      canonical.rel = "canonical";
-      document.head.appendChild(canonical);
-    }
-    canonical.href = `${SITE_URL}${path}`;
-  }, [title, description, path]);
-  return null;
+function PageFallback() {
+  return <div className="min-h-[70vh] bg-page" aria-hidden />;
 }
 
 /** Reliable in-page scroll for SPA + sticky header (uses scroll-margin on targets). */
@@ -177,28 +154,17 @@ function NavLink({
   );
 }
 
-function LogoMark({ className = "h-8 w-8" }: { className?: string }) {
+function FooterFavicon({ className = "h-20 w-20 sm:h-24 sm:w-24" }: { className?: string }) {
   return (
-    <svg
-      className={className}
-      viewBox="0 0 32 32"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-      aria-hidden
-    >
-      <rect width="32" height="32" rx="8" className="fill-black" />
-      <text
-        x="16"
-        y="21"
-        textAnchor="middle"
-        fill="white"
-        fontSize="9"
-        fontWeight="700"
-        fontFamily="Poppins, system-ui, sans-serif"
-      >
-        MA
-      </text>
-    </svg>
+    <img
+      src="/icon.png"
+      alt="Meme Adda 098"
+      width={96}
+      height={96}
+      loading="lazy"
+      decoding="async"
+      className={`shrink-0 rounded-2xl object-contain ${className}`}
+    />
   );
 }
 
@@ -293,13 +259,13 @@ function HeroAvatar() {
     );
   }
   return (
-    <img
-      src={memeAddaProfile}
-      alt="Meme Adda 098 – Indian viral meme page profile"
-      width={128}
-      height={128}
-      fetchPriority="high"
-      className={`h-28 w-28 object-cover sm:h-32 sm:w-32 ${avatarFrame}`}
+    <SeoImage
+      src={memeAddaLogo}
+      alt="meme adda 098 trending meme"
+      width={160}
+      height={160}
+      priority
+      className={`h-32 w-32 object-contain sm:h-40 sm:w-40 ${avatarFrame}`}
       onError={() => setBroken(true)}
     />
   );
@@ -322,14 +288,20 @@ function Hero() {
           className="mt-8 text-5xl font-extrabold leading-[1.05] tracking-[-0.02em] text-black sm:text-6xl md:text-7xl lg:text-[76px]"
           variants={fadeUpItem}
         >
-          MEME{" "}
+          Meme Adda{" "}
           <span className="bg-gradient-to-r from-accent-blue to-accent-green bg-clip-text text-transparent">
-            ADDA
-          </span>{" "}
-          098
+            098
+          </span>
         </motion.h1>
         <motion.p
-          className="mx-auto mt-6 max-w-2xl text-lg font-medium italic leading-relaxed text-muted sm:text-xl"
+          className="mx-auto mt-6 max-w-2xl text-lg font-medium leading-relaxed text-muted sm:text-xl"
+          variants={fadeUpItem}
+        >
+          Meme Adda 098 brings you trending viral memes in India — funny reels, desi humor, and
+          daily meme adda memes from @meme_adda_098.
+        </motion.p>
+        <motion.p
+          className="mx-auto mt-4 max-w-2xl text-base font-medium italic leading-relaxed text-muted sm:text-lg"
           variants={fadeUpItem}
         >
           &ldquo;The admin stays hidden… but the memes always hit.&rdquo;
@@ -449,9 +421,9 @@ function PartnerAdsSection() {
               variants={fadeUpItem}
               whileHover={{ y: -4, transition: { duration: 0.28, ease: easeSmooth } }}
             >
-              <img
+              <SeoImage
                 src={ad.icon}
-                alt=""
+                alt={`${ad.name} – Meme Adda 098 partner`}
                 width={52}
                 height={52}
                 className="h-[52px] w-[52px] shrink-0 rounded-xl object-cover"
@@ -1238,11 +1210,26 @@ function Footer() {
         <div className="absolute inset-0 bg-[linear-gradient(to_top,#ffffff_0%,rgba(255,255,255,0.92)_35%,rgba(255,255,255,0.55)_65%,transparent_100%)]" />
       </div>
       <div className="relative z-10 mx-auto flex max-w-[1200px] flex-col items-center justify-between gap-6 px-4 py-12 sm:flex-row sm:px-8 lg:px-12">
-        <div className="flex items-center gap-2 text-sm text-muted">
-          <LogoMark className="h-6 w-6" />
-          <span>© {new Date().getFullYear()} Meme Adda 098</span>
+        <div className="flex flex-col items-center gap-3 sm:items-start">
+          <Link
+            to="/"
+            className="flex items-center gap-4 font-heading text-xl font-bold tracking-tight text-black hover:text-muted sm:text-2xl"
+          >
+            <FooterFavicon />
+            Meme Adda 098
+          </Link>
+          <span className="text-sm text-muted sm:text-base">
+            © {new Date().getFullYear()} Meme Adda 098 — meme adda memes daily
+          </span>
         </div>
         <div className="flex flex-col items-center gap-3 sm:items-end">
+          <div className="flex flex-wrap items-center justify-center gap-x-5 gap-y-2 text-sm text-muted">
+            {MEMES.slice(0, 4).map((m) => (
+              <Link key={m.slug} to={`/meme/${m.slug}`} className="hover:text-black">
+                {m.title}
+              </Link>
+            ))}
+          </div>
           <div className="flex flex-wrap items-center justify-center gap-x-5 gap-y-2 text-sm text-muted">
             <Link to="/trending-memes" className="hover:text-black">
               Trending Memes
@@ -1280,9 +1267,11 @@ function Footer() {
 function AppLayout({ children }: { children: React.ReactNode }) {
   return (
     <div className="min-h-screen bg-page font-sans text-black antialiased">
+      <SeoKeywordBlock />
       <Navbar />
       {children}
       <Footer />
+      <InstallAppPrompt />
     </div>
   );
 }
@@ -1300,11 +1289,7 @@ function MemeAddaLanding() {
 
   return (
     <AppLayout>
-      <PageSeo
-        title="Meme Adda 098 – Viral Memes, Funny Reels & Trending Content"
-        description="Explore Meme Adda 098 for the latest viral memes, funny reels, and trending internet content. Updated daily with relatable humor."
-        path="/"
-      />
+      <PageSeo path="/" />
       <main>
         <Hero />
         <PartnerAdsSection />
@@ -1323,21 +1308,50 @@ function MemeAddaLanding() {
   );
 }
 
+function MemePageRoute() {
+  const { slug } = useParams<{ slug: string }>();
+  const navigate = useNavigate();
+  const meme = slug ? getMemeBySlug(slug) : undefined;
+
+  useEffect(() => {
+    if (!meme) navigate("/", { replace: true });
+  }, [meme, navigate]);
+
+  if (!meme) return <PageFallback />;
+
+  return (
+    <AppLayout>
+      <PageSeo
+        title={memePageTitle()}
+        description={meme.description}
+        path={`/meme/${meme.slug}`}
+        schemaType="article"
+      />
+      <main className="min-h-[70vh] bg-page">
+        <MemePageContent meme={meme} />
+      </main>
+    </AppLayout>
+  );
+}
+
 export default function App() {
   return (
     <Routes>
       <Route path="/" element={<MemeAddaLanding />} />
+      <Route path="/meme/:slug" element={<MemePageRoute />} />
       <Route
         path="/terms"
         element={
           <AppLayout>
             <PageSeo
               title="Terms and Conditions – Meme Adda 098"
-              description="Read the terms and conditions for using Meme Adda 098. Content usage, intellectual property, and legal information."
+              description="Read the terms and conditions for Meme Adda 098. Content usage, intellectual property, and legal information."
               path="/terms"
             />
             <main className="min-h-[70vh] bg-page">
-              <TermsContent />
+              <Suspense fallback={<PageFallback />}>
+                <TermsContent />
+              </Suspense>
             </main>
           </AppLayout>
         }
@@ -1352,7 +1366,9 @@ export default function App() {
               path="/privacy"
             />
             <main className="min-h-[70vh] bg-page">
-              <PrivacyContent />
+              <Suspense fallback={<PageFallback />}>
+                <PrivacyContent />
+              </Suspense>
             </main>
           </AppLayout>
         }
@@ -1362,12 +1378,15 @@ export default function App() {
         element={
           <AppLayout>
             <PageSeo
-              title="Trending Memes 2026 – Daily Viral Humor | Meme Adda 098"
-              description="Discover the hottest trending memes of 2026 on Meme Adda 098. Daily viral memes, relatable Indian humor, and fresh content updated every day."
+              title="Trending Memes 2026 – Meme Adda 098"
+              description="Discover trending memes on Meme Adda 098. Daily viral memes, relatable Indian humor, and fresh meme adda 098 content."
               path="/trending-memes"
+              schemaType="article"
             />
             <main className="min-h-[70vh] bg-page">
-              <TrendingMemesContent />
+              <Suspense fallback={<PageFallback />}>
+                <TrendingMemesContent />
+              </Suspense>
             </main>
           </AppLayout>
         }
@@ -1377,12 +1396,15 @@ export default function App() {
         element={
           <AppLayout>
             <PageSeo
-              title="Latest Memes 2026 – New Funny Memes Daily | Meme Adda 098"
-              description="Get the latest memes of 2026 on Meme Adda 098. Fresh funny memes, new viral reels, and today's hottest internet humor from India."
+              title="Latest Memes 2026 – Meme Adda 098"
+              description="Get the latest memes on Meme Adda 098. Fresh funny memes, new viral reels, and today's hottest meme adda memes from India."
               path="/latest-memes"
+              schemaType="article"
             />
             <main className="min-h-[70vh] bg-page">
-              <LatestMemesContent />
+              <Suspense fallback={<PageFallback />}>
+                <LatestMemesContent />
+              </Suspense>
             </main>
           </AppLayout>
         }
@@ -1392,12 +1414,15 @@ export default function App() {
         element={
           <AppLayout>
             <PageSeo
-              title="Instagram Memes India – Follow @meme_adda_098 | Meme Adda 098"
-              description="Follow Meme Adda 098 on Instagram for the best Indian memes. Funny reels, viral posts, and trending content from @meme_adda_098."
+              title="Instagram Memes India – Meme Adda 098"
+              description="Follow Meme Adda 098 on Instagram for the best Indian memes. Funny reels, viral posts, and trending meme adda 098 content."
               path="/instagram-memes"
+              schemaType="article"
             />
             <main className="min-h-[70vh] bg-page">
-              <InstagramMemesContent />
+              <Suspense fallback={<PageFallback />}>
+                <InstagramMemesContent />
+              </Suspense>
             </main>
           </AppLayout>
         }

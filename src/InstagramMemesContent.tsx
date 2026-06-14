@@ -127,7 +127,7 @@ export default function InstagramMemesContent() {
           to="/"
           className="rounded-full border border-border px-4 py-2 text-black transition-colors hover:bg-gray-50"
         >
-          ← Home
+          Meme Adda 098
         </Link>
         <Link
           to="/trending-memes"
