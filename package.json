@@ -7,7 +7,7 @@
     "dev": "vite",
     "sitemap": "node scripts/generate-sitemap.mjs",
     "compress-images": "node scripts/compress-images.mjs",
-    "build": "node scripts/generate-sitemap.mjs && tsc -b && vite build",
+    "build": "node scripts/generate-sitemap.mjs && tsc -b && vite build && node scripts/prerender-static-html.mjs",
     "preview": "vite preview"
   },
   "dependencies": {
