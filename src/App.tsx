@@ -56,7 +56,7 @@ const PARTNER_ADS = [
     icon: "/oneflix-icon.png",
   },
   {
-    name: "AnimeXplore",
+    name: "RE:Anime",
     tagline: "Watch anime online free",
     url: "https://animexploree.vercel.app/",
     icon: "/anime-icon.png",
@@ -66,6 +66,12 @@ const PARTNER_ADS = [
     tagline: "Live cricket & sports streaming",
     url: "https://playup.vercel.app/",
     icon: "/cricket-icon.png",
+  },
+  {
+    name: "YorWatch",
+    tagline: "Watch movies fast & friendly",
+    url: "https://yorwatch.vercel.app/",
+    icon: "/yorWatch.png",
   },
 ] as const;
 
