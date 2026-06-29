@@ -70,7 +70,7 @@ const PARTNER_ADS = [
   {
     name: "YorWatch",
     tagline: "Watch movies fast & friendly",
-    url: "https://yorwatch.vercel.app/",
+    url: "https://yorwatchh.vercel.app/",
     icon: "/yorWatch.png",
   },
 ] as const;
