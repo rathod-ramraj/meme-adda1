@@ -50,6 +50,12 @@ const hoverGlow =
 
 const PARTNER_ADS = [
   {
+    name: "YorWatch",
+    tagline: "Free movies, TV series & anime",
+    url: "https://yorwatchh.vercel.app/",
+    icon: "/yorWatch.png",
+  },
+  {
     name: "ONEFLIX",
     tagline: "Free movies & series in HD",
     url: "https://oneflixx.vercel.app/",
@@ -58,7 +64,7 @@ const PARTNER_ADS = [
   {
     name: "RE:Anime",
     tagline: "Watch anime online free",
-    url: "https://animexploree.vercel.app/",
+    url: "https://reanimee.vercel.app/",
     icon: "/anime-icon.png",
   },
   {
@@ -66,12 +72,6 @@ const PARTNER_ADS = [
     tagline: "Live cricket & sports streaming",
     url: "https://playup.vercel.app/",
     icon: "/cricket-icon.png",
-  },
-  {
-    name: "YorWatch",
-    tagline: "Watch movies fast & friendly",
-    url: "https://yorwatchh.vercel.app/",
-    icon: "/yorWatch.png",
   },
 ] as const;
 

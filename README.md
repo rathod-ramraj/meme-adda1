@@ -18,10 +18,10 @@ Meme Adda 098 is a viral meme platform built for sharing and exploring the lates
 
 - **Meme Feeds:** Browse trending, latest, and Instagram-specific memes.
 - **Partner Ads / Sponsored Apps:** Integrated section showcasing partner applications:
+  - **YorWatch** (Free movies, TV series & anime)
   - **ONEFLIX** (Free movies & series in HD)
   - **RE:Anime** (Watch anime online free)
   - **PlayUp Live** (Live cricket & sports streaming)
-  - **YorWatch** (Watch movies fast & friendly)
 - **Responsive Layout:** Optimized for mobile, tablet, and desktop views.
 - **SEO & Performance:** High-performance static pre-rendering, automatic sitemap generation, and SEO meta tag configurations.
 
