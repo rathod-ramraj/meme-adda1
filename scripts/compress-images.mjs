@@ -14,7 +14,7 @@ async function compress() {
     return;
   }
 
-  const targets = ["logo.png", "icon.png", "oneflix-icon.png", "anime-icon.png", "cricket-icon.png", "yorWatch.png"];
+  const targets = ["logo.png", "icon.png", "oneflix-icon.png", "anime-icon.png", "cricket-icon.png", "yorWatch.png", "WatchFlow.png"];
   for (const file of targets) {
     const path = join(publicDir, file);
     if (!existsSync(path)) continue;

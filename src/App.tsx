@@ -73,6 +73,12 @@ const PARTNER_ADS = [
     url: "https://playup.vercel.app/",
     icon: "/cricket-icon.png",
   },
+  {
+    name: "WatchFlow",
+    tagline: "Curated directory of free streaming sites",
+    url: "https://watchfloww.vercel.app/",
+    icon: "/WatchFlow.png",
+  },
 ] as const;
 
 const SOCIAL = {
